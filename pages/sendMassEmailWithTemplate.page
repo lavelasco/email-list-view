@@ -1,0 +1,15 @@
+<apex:page standardController="Opportunity" extensions="SendEmailWithTemplateController" recordSetVar="records">
+    <apex:includeLightning/>
+    <script>
+        $Lightning.use("c:sendEmailVFApp", function() {
+            $Lightning.createComponent("c:sendMassEmailWithTemplate", {
+                "selectedRecordsFromVF":{!lContacts}
+            },
+            "compContainer",
+            function(component) {
+                
+            });
+        });
+    </script>
+    <div id="compContainer" />
+</apex:page>

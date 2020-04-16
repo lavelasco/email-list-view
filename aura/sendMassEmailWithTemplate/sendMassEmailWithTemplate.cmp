@@ -1,0 +1,56 @@
+<aura:component Controller="SendEmailWithTemplateController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:attribute name="selectedRecordsFromVF" type="String"/>
+    <aura:attribute name="lContactsToEmail" type="Contact[]"/>
+    <aura:attribute name="lTemplateFolders" type="Folder[]"/>
+    <aura:attribute name="lEmailTemplates" type="EmailTemplate[]"/>
+    <aura:attribute name="selectedFolder" type="String"/>
+    <aura:attribute name="selectedTemplate" type="String"/>
+    <aura:attribute name="numberOfContacts" type="Integer"/>
+
+    <div class="slds-scope">
+        <div class="slds-table--header-fixed_container slds-m-top_xx-small" style="height:350px;">
+            <div class="slds-scrollable_y" style="height:100%;">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table--header-fixed">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                            <div class="slds-truncate slds-cell-fixed" title="Contact Name">Contact Name ({!v.numberOfContacts})</div>
+                            </th>
+                            <th class="" scope="col">
+                            <div class="slds-truncate slds-cell-fixed" title="Contact Email">Email</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.lContactsToEmail}" var="con">
+                            <tr class="slds-hint-parent">
+                                <td data-label="Contact Name">
+                                    <div class="slds-truncate" title="{!con.Name}">{!con.Name}</div>
+                                </td>
+                                <td data-label="Contact Email">
+                                    <div class="slds-truncate" title="{!con.Email}">{!con.Email}</div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <lightning:select aura:id="selectFolder" name="selectFolder" label="Select a folder" onchange="{!c.onFolderSelect}">
+            <option value="">Choose a template</option>
+            <aura:iteration items="{!v.lTemplateFolders}" var="fol">
+                <option value="{!fol.Id}">{!fol.Name}</option>
+            </aura:iteration>
+        </lightning:select>
+        <lightning:select aura:id="selectTemplate" name="selectTemplate" label="Select a template" onchange="{!c.onTemplateSelect}">
+            <option value="">Choose a template</option>
+            <aura:iteration items="{!v.lEmailTemplates}" var="temp">
+                <option value="{!temp.Id}">{!temp.Name}</option>
+            </aura:iteration>
+        </lightning:select>
+        <lightning:button label="Send" title="Send Mass Mail" onclick="{!c.onClickSend}"/>
+        <lightning:notificationsLibrary aura:id="notifLib"/>
+    </div>
+</aura:component>
