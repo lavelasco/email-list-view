@@ -6,4 +6,4 @@ Custom Metadata Type
   contact field based on the object API name in this setting
   Fields:
     Contact API Name: contact field API name on the object
-    Master Label: the object API nname
+    Master Label: the object API name
